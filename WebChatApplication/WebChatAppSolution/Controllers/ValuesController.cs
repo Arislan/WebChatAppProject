@@ -12,7 +12,7 @@ namespace WebChatAppSolution.Controllers
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2", "value3", "value4" };
+            return new string[] { "value1", "value2", "value3", "value4", "value5" };
         }
 
         // GET api/values/5
