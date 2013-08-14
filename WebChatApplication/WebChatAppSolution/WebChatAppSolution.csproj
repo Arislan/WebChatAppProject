@@ -170,7 +170,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChannelModel.cs" />
     <Compile Include="Models\MessagesDto.cs" />
+    <Compile Include="Models\UserByChannels.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UsersByMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
