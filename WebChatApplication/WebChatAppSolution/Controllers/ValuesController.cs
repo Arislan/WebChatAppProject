@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebChat.Data;
+using WebChat.Models;
 
 namespace WebChatAppSolution.Controllers
 {
@@ -18,7 +21,11 @@ namespace WebChatAppSolution.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            return "value";
+            var db = new WebChatEntity();
+
+            db.Users.Add(new User { NickName = "GGggggg" });  
+            db.SaveChanges();
+            return ConfigurationManager.AppSettings["ChatDbConnectionString"];
         }
 
         // POST api/values

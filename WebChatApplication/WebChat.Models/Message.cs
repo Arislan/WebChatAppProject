@@ -14,11 +14,9 @@ namespace WebChat.Models
         public DateTime PublishDate { get; set; }
 
         public int SenderId { get; set; }
+        public virtual User Retriever { get; set; }
 
         public int RetrieverId { get; set; }
-
         public virtual User Sender { get; set; }
-
-        public virtual User Retriever { get; set; }
     }
 }
