@@ -23,7 +23,6 @@ namespace WebChatAppSolution.Controllers
             this.userRepository = userRepository ;
         }
 
-        // GET api/User
        
     }
 }

@@ -23,6 +23,8 @@ namespace WebChatAppSolution
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ConfigureApi(GlobalConfiguration.Configuration);
         }
 
         void ConfigureApi(HttpConfiguration config)
