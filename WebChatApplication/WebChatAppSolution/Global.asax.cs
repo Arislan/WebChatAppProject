@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebChatAppSolution.DependencyResolver;
 
 namespace WebChatAppSolution
 {
@@ -22,6 +23,11 @@ namespace WebChatAppSolution
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        void ConfigureApi(HttpConfiguration config)
+        {
+            config.DependencyResolver = new DbDependencyResolver();
         }
     }
 }

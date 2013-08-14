@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Models", "WebChat.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Data", "WebChat.Data\WebChat.Data.csproj", "{9613EBAD-9021-41C7-9E6A-BBD0EDF68E47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Repository", "WebChat.Repository\WebChat.Repository.csproj", "{BEB1A19B-F8A1-4D3C-A446-69EF0BB883F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{9613EBAD-9021-41C7-9E6A-BBD0EDF68E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9613EBAD-9021-41C7-9E6A-BBD0EDF68E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9613EBAD-9021-41C7-9E6A-BBD0EDF68E47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEB1A19B-F8A1-4D3C-A446-69EF0BB883F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEB1A19B-F8A1-4D3C-A446-69EF0BB883F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEB1A19B-F8A1-4D3C-A446-69EF0BB883F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEB1A19B-F8A1-4D3C-A446-69EF0BB883F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
