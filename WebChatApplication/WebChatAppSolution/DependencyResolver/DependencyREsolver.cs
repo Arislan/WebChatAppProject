@@ -25,13 +25,12 @@ namespace WebChatAppSolution.DependencyResolver
                 var userRepository = new EFRepository<User>(new WebChatEntity());
                 return new UsersController(userRepository);
             }
-            //else if (serviceType == typeof(CommentsController))
-            //{
-            //    var dbContext = new PlacesContext();
-            //    var placeRepository = new EFRepository<Place>(dbContext);
-            //    var commentsRepository = new EFRepository<Comment>(dbContext);
-            //    return new CommentsController(commentsRepository, placeRepository);
-            //}
+            else if (serviceType == typeof(ChannelController))
+            {
+
+                var channelRepository = new EFRepository<Channel>(new WebChatEntity());            
+                return new ChannelController(channelRepository);
+            }
             //else if (serviceType == typeof(PlacesController))
             //{
             //    var dbContext = new PlacesContext();
