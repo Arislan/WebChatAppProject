@@ -13,6 +13,8 @@ namespace WebChat.Models
 
         public DateTime PublishDate { get; set; }
 
+        public string State { get; set; }
+
         public int SenderId { get; set; }
         public virtual User Retriever { get; set; }
 
