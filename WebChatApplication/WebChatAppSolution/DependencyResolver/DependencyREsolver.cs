@@ -6,6 +6,7 @@ using System.Web.Http.Dependencies;
 using WebChatAppSolution.Controllers;
 using WebChat.Data;
 using WebChat.Models;
+using WebChat.Repository;
 
 namespace WebChatAppSolution.DependencyResolver
 {
@@ -19,12 +20,10 @@ namespace WebChatAppSolution.DependencyResolver
         public object GetService(Type serviceType)
         {
             //here we can write what to do for all controllers we can use something differen than EntityFramework
-            if (serviceType == typeof(HomeController))
+            if (serviceType == typeof(UsersController))
             {
-                //var categoryRepository = new EFRepository<Category>(new PlacesContext());
-                //var placerepository = new EFRepository<Place>(new PlacesContext());
-                //return new CategoriesController(categoryRepository, placerepository);
-                return null;
+                var userRepository = new EFRepository<User>(new WebChatEntity());
+                return new UsersController(userRepository);
             }
             //else if (serviceType == typeof(CommentsController))
             //{

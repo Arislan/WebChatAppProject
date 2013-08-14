@@ -298,6 +298,10 @@
       <Project>{c27e818c-6522-49c5-abd3-0bb08a21869f}</Project>
       <Name>WebChat.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebChat.Repository\WebChat.Repository.csproj">
+      <Project>{beb1a19b-f8a1-4d3c-a446-69ef0bb883f3}</Project>
+      <Name>WebChat.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
