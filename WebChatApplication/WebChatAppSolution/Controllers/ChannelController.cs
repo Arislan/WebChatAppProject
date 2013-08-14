@@ -4,11 +4,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebChat.Data;
+using WebChat.Models;
+using WebChat.Repository;
 
 namespace WebChatAppSolution.Controllers
 {
     public class ChannelController : ApiController
     {
+         private IRepositoty<Channel> channelRepository;
+
+        public ChannelController()
+        {
+        }
+
+        public ChannelController(IRepositoty<Channel> channelRepository)
+        {
+            this.channelRepository = channelRepository ;
+        }
+
         // GET api/channel
         public IEnumerable<string> Get()
         {
