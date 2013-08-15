@@ -32,8 +32,8 @@ namespace WebChatAppSolution.Controllers
         [ActionName("register")]
         public HttpResponseMessage RegisterUser(UserModel user)
         {
-            var userEntities = this.userRepository.Find(u => u.NickName.ToLower() == user.NickName.ToLower());
-            if (userEntities == null)
+            var existingUser = this.userRepository.Find(u => u.NickName.ToLower() == user.NickName.ToLower()).FirstOrDefault();
+            if (existingUser != null)
             {
                 var errResponse = this.Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                     "A user with that nickname already exists");
@@ -51,17 +51,9 @@ namespace WebChatAppSolution.Controllers
             var createdUser = this.userRepository.Add(userEntity);
             string sessionKey = this.GenerateSessionKey(createdUser.Id);
 
-            User updateUser = new User()
-            {
-                NickName = createdUser.NickName,
-                HashedPass = createdUser.HashedPass,
-                Channels = createdUser.Channels,
-                PictureUrl = createdUser.PictureUrl,
-                SessionKey = sessionKey,
-                Id = createdUser.Id
-            };
+            createdUser.SessionKey = sessionKey;
 
-            this.userRepository.Update(updateUser);
+            this.userRepository.Update(createdUser);
 
             UserLoggedModel loggedUser = new UserLoggedModel()
             {
