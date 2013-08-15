@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using WebChat.Models;
 using System.Runtime.Serialization;
 
@@ -10,14 +8,21 @@ namespace WebChatAppSolution.Models
     [DataContract]
     public class ChannelModel
     {
-        [DataMember]
+        [DataMember(Name="id")]
         public int Id { get; set; }
 
-        [DataMember]
+        [DataMember(Name="name")]
         public string Name { get; set; }
 
-        [DataMember]
-        public IEnumerable<UserByChannels> Users { get; set; }
+        public static ChannelModel CreateFromChannelEntity(Channel channelEntity)
+        {
+            ChannelModel model = new ChannelModel()
+            {
+                Id = channelEntity.Id,
+                Name = channelEntity.Name
+            };
 
+            return model;
+        }
     }
 }
