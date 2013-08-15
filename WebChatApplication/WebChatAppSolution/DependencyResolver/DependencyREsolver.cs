@@ -28,7 +28,7 @@ namespace WebChatAppSolution.DependencyResolver
             else if (serviceType == typeof(ChannelController))
             {
 
-                var channelRepository = new EFRepository<Channel>(new WebChatEntity());            
+                var channelRepository = new EFRepository<Channel>(new WebChatEntity());
                 return new ChannelController(channelRepository);
             }
             //else if (serviceType == typeof(PlacesController))
