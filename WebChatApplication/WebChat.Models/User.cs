@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WebChat.Models
@@ -14,5 +15,12 @@ namespace WebChat.Models
         public string PictureUrl { get; set; }
 
         public string SessionKey { get; set; }
+
+        public virtual ICollection<Channel> Channels { get; set; }
+
+        public User()
+        {
+            this.Channels = new HashSet<Channel>();
+        }
     }
 }

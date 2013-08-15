@@ -25,17 +25,17 @@ namespace WebChat.Data
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<WebChatEntity,WebChatEntityMigrator>());
 
-            modelBuilder.Entity<Channel>()
-          .HasRequired(x => x.SecondUser)
-          .WithMany()
-          .HasForeignKey(x => x.SecondUserId)
-          .WillCascadeOnDelete(false);
+         //   modelBuilder.Entity<Channel>()
+         // .HasRequired(x => x.SecondUser)
+         // .WithMany()
+         // .HasForeignKey(x => x.SecondUserId)
+         // .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Message>()
-         .HasRequired(x => x.Retriever)
-         .WithMany()
-         .HasForeignKey(x => x.RetrieverId)
-         .WillCascadeOnDelete(false);
+         //   modelBuilder.Entity<Message>()
+         //.HasRequired(x => x.Retriever)
+         //.WithMany()
+         //.HasForeignKey(x => x.RetrieverId)
+         //.WillCascadeOnDelete(false);
         }
     }
 }

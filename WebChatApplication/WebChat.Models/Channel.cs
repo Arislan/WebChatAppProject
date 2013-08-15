@@ -12,11 +12,11 @@ namespace WebChat.Models
 
         public string Name { get; set; }
 
-        public int FirstUserId { get; set; }
-        public virtual User FirstUser { get; set; }
+        public virtual ICollection<User> Users { get; set; }
 
-        public int SecondUserId { get; set; }
-        public virtual User SecondUser { get; set; }
-
+        public Channel()
+        {
+            this.Users = new HashSet<User>();
+        }
     }
 }
