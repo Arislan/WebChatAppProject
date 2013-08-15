@@ -20,5 +20,8 @@ namespace WebChat.Models
 
         public int RetrieverId { get; set; }
         public virtual User Sender { get; set; }
+
+        public int ChannelId { get; set; }
+        public virtual Channel Channel { get; set; }
     }
 }

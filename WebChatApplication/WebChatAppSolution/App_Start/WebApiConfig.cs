@@ -12,8 +12,8 @@ namespace WebChatAppSolution
         {
             config.Routes.MapHttpRoute(
                    name: "CustomApi",
-                   routeTemplate: "api/{controller}/{action}/{sessionKey}",
-                   defaults: new { sessionKey = RouteParameter.Optional }
+                   routeTemplate: "api/users/{action}/{sessionKey}",
+                   defaults: new { controller = "users", sessionKey = RouteParameter.Optional }
                );
 
             config.Routes.MapHttpRoute(

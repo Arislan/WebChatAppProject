@@ -33,11 +33,11 @@ namespace WebChatAppSolution.DependencyResolver
             }
             else if (serviceType == typeof(MessagesController))
             {
-                var bdContext = new WebChatEntity();
+                var dbContext = new WebChatEntity();
 
-                var messageRepository = new EFRepository<Message>(bdContext);
-                var userRepository = new EFRepository<User>(bdContext);
-                return new MessagesController(messageRepository, userRepository);
+                var messageRepository = new EFRepository<Message>(dbContext);
+                var userRepository = new EFRepository<User>(dbContext);
+                return new MessagesController(messageRepository, userRepository, new EFRepository<Channel>(dbContext));
             }
             //else if (serviceType == typeof(PlacesController))
             //{

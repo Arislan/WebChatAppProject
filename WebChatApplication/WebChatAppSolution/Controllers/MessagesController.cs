@@ -15,15 +15,25 @@ namespace WebChatAppSolution.Controllers
     {
         private IRepositoty<Message> messageRepository;
         private IRepositoty<User> userRepository;
+        private IRepositoty<Channel> channelRepository;
+
+        private PubnubAPI pubnub = new PubnubAPI(
+          "pub-c-01dc0145-d006-4cc3-b34f-5b4f101cdaa5",               // PUBLISH_KEY
+          "sub-c-3e6b5fb6-04d9-11e3-8dc9-02ee2ddab7fe",               // SUBSCRIBE_KEY
+          "sec-c-NWI4MThmOTYtNWE1My00MmVlLWI1ZTktNzZmODgyOTIyZWY0",   // SECRET_KEY
+          true                                                        // SSL_ON?
+      );
 
         public MessagesController()
         {
         }
 
-        public MessagesController(IRepositoty<Message> messageRepository, IRepositoty<User> userRepository)
+        public MessagesController(IRepositoty<Message> messageRepository, IRepositoty<User> userRepository, 
+            IRepositoty<Channel> channelRepo)
         {
             this.messageRepository = messageRepository;
             this.userRepository = userRepository;
+            this.channelRepository = channelRepo;
         }
 
         // GET api/messages
@@ -89,10 +99,19 @@ namespace WebChatAppSolution.Controllers
         //
         public HttpResponseMessage Post([FromBody]MessagesDto value)
         {
+            Channel channel = this.channelRepository.Find( x => x.Name == value.Channel).FirstOrDefault();
+            if( channel == null)
+            {
+                this.channelRepository.Add(new Channel { Name = value.Channel });
+                channel = this.channelRepository.Find(x => x.Name == value.Channel).FirstOrDefault();
+            }
+
             Message message = CreateMessage(value);
-
+            message.PublishDate = DateTime.Now;
+            pubnub.Publish(value.Channel, String.Format("[{0}]{1} - {2}", message.PublishDate.ToString("hh:mm:ss"), value.Sender.NickName, value.Content));
+           
+            message.Channel = channel;
             messageRepository.Add(message);
-
             var response = this.BuildHttpResponse(message, HttpStatusCode.Created);
             return response;
         }
@@ -149,7 +168,11 @@ namespace WebChatAppSolution.Controllers
                 PublishDate = value.PublishDate,
             };
 
-            User sender = this.userRepository.Find(x => x.Id == value.Sender.Id).FirstOrDefault();
+            User sender = new User() ;
+            if (value.Sender != null)
+            {
+                sender = this.userRepository.Find(x => x.NickName == value.Sender.NickName).FirstOrDefault();
+            }
 
             if (sender != null)
             {
@@ -160,7 +183,12 @@ namespace WebChatAppSolution.Controllers
                 throw new ArgumentNullException("User must be register");
             }
 
-            User resiver = this.userRepository.Find(x => x.Id == value.Retriever.Id).FirstOrDefault();
+            User resiver = new User();
+
+            if (value.Retriever != null)
+            {
+                resiver = this.userRepository.Find(x => x.Id == value.Retriever.Id).FirstOrDefault();
+            }
 
             if (resiver != null)
             {
