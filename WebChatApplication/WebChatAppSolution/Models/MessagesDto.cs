@@ -23,6 +23,9 @@ namespace WebChatAppSolution.Models
         public DateTime PublishDate { get; set; }
 
         [DataMember]
+        public string State { get; set; }
+
+        [DataMember]
         public virtual UsersByMessages Retriever { get; set; }
 
         [DataMember]

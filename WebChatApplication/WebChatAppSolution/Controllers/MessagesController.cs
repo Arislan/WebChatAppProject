@@ -38,6 +38,7 @@ namespace WebChatAppSolution.Controllers
                     FileUrl = x.FileUrl,
                     Content = x.Content,
                     PublishDate = x.PublishDate,
+                    State = x.State,
 
                     Retriever = new UsersByMessages()
                     {
@@ -67,6 +68,7 @@ namespace WebChatAppSolution.Controllers
                     Content = x.Content,
                     FileUrl = x.FileUrl,
                     PublishDate = x.PublishDate,
+                    State = x.State,
 
                     Retriever = new UsersByMessages()
                     {
@@ -104,6 +106,7 @@ namespace WebChatAppSolution.Controllers
 
             message.FileUrl = value.FileUrl ?? message.FileUrl;
             message.Content = value.Content ?? message.Content;
+            message.State = value.State ?? message.State;
 
             if (value.PublishDate != null)
             {
@@ -147,6 +150,7 @@ namespace WebChatAppSolution.Controllers
                 Content = value.Content,
                 FileUrl = value.FileUrl,
                 PublishDate = value.PublishDate,
+                State = value.State,
             };
 
             User sender = this.userRepository.Find(x => x.Id == value.Sender.Id).FirstOrDefault();
@@ -183,6 +187,7 @@ namespace WebChatAppSolution.Controllers
                  FileUrl = message.FileUrl,
                  Content = message.Content,
                  PublishDate = message.PublishDate,
+                 State = message.State,
 
                  Retriever = new UsersByMessages()
                  {
