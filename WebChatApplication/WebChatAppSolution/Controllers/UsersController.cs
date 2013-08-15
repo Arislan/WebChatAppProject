@@ -25,7 +25,7 @@ namespace WebChatAppSolution.Controllers
 
         public UsersController(IRepositoty<User> userRepository)
         {
-            this.userRepository = userRepository ;
+            this.userRepository = userRepository;
         }
 
         [HttpPost]
@@ -49,19 +49,67 @@ namespace WebChatAppSolution.Controllers
             };
 
             var createdUser = this.userRepository.Add(userEntity);
-            string sessionKey = this.GenerateSessionKey(createdUser.Id);
 
-            createdUser.SessionKey = sessionKey;
+            var response = this.LoginUser(createdUser, HttpStatusCode.Created);
+            return response;
+        }
 
-            this.userRepository.Update(createdUser);
+        [HttpPost]
+        [ActionName("login")]
+        public HttpResponseMessage LoginUser(UserModel user)
+        {
+            string userNicknameToLower = user.NickName.ToLower();
+
+            var existingUser = this.userRepository.Find
+                (u => u.NickName == userNicknameToLower && u.HashedPass == user.HashedPass).FirstOrDefault();
+
+            if (existingUser == null)
+            {
+                var errResponse = this.Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                    "Incorrect nickname or password");
+                return errResponse;
+            }
+
+            var response = this.LoginUser(existingUser, HttpStatusCode.OK);
+            return response;
+        }
+
+        [HttpGet]
+        [ActionName("logout")]
+        public HttpResponseMessage LogoutUser(string sessionKey)
+        {
+            var user = this.userRepository.Find(u => u.SessionKey == sessionKey).FirstOrDefault();
+
+            if (user == null)
+            {
+                var errResponse = this.Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                    "There is no session with the given session key");
+                return errResponse;
+            }
+
+            user.SessionKey = null;
+            this.userRepository.Update(user);
+
+            var response = this.Request.CreateResponse(HttpStatusCode.OK,
+                "User logged out successfully");
+            return response;
+        }
+
+        private HttpResponseMessage LoginUser(User user, HttpStatusCode statusCode)
+        {
+            string sessionKey = this.GenerateSessionKey(user.Id);
+
+            user.SessionKey = sessionKey;
+
+            this.userRepository.Update(user);
 
             UserLoggedModel loggedUser = new UserLoggedModel()
             {
-                Nickname = createdUser.NickName,
+                Nickname = user.NickName,
                 SessionKey = sessionKey
             };
 
-            var response = this.Request.CreateResponse(HttpStatusCode.Created, loggedUser);
+            var response = this.Request.CreateResponse(statusCode, loggedUser);
             return response;
         }
 
