@@ -95,6 +95,36 @@ namespace WebChatAppSolution.Controllers
             return response;
         }
 
+        [HttpGet]
+        [ActionName("logged")]
+        public IEnumerable<UserLoggedModel> GetLoggedUsers()
+        {
+            var loggedUsers = this.userRepository.Find(u => u.SessionKey != null);
+
+            List<UserLoggedModel> models = new List<UserLoggedModel>();
+            foreach (var user in loggedUsers)
+            {
+                models.Add(UserLoggedModel.CreateFromUserEntity(user));
+            }
+
+            return models;
+        }
+
+        [HttpGet]
+        [ActionName("all")]
+        public IEnumerable<UserRegisteredModel> GetRegisteredUsers()
+        {
+            var users = this.userRepository.All();
+
+            List<UserRegisteredModel> models = new List<UserRegisteredModel>();
+            foreach (var user in users)
+            {
+                models.Add(UserRegisteredModel.CreateFromUserEntity(user));
+            }
+
+            return models;
+        }
+
         private HttpResponseMessage LoginUser(User user, HttpStatusCode statusCode)
         {
             string sessionKey = this.GenerateSessionKey(user.Id);
@@ -103,11 +133,7 @@ namespace WebChatAppSolution.Controllers
 
             this.userRepository.Update(user);
 
-            UserLoggedModel loggedUser = new UserLoggedModel()
-            {
-                Nickname = user.NickName,
-                SessionKey = sessionKey
-            };
+            UserLoggedModel loggedUser = UserLoggedModel.CreateFromUserEntity(user);
 
             var response = this.Request.CreateResponse(statusCode, loggedUser);
             return response;
