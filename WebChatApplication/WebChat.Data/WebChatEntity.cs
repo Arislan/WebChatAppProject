@@ -31,11 +31,11 @@ namespace WebChat.Data
          // .HasForeignKey(x => x.SecondUserId)
          // .WillCascadeOnDelete(false);
 
-               modelBuilder.Entity<Message>()
-            .HasRequired(x => x.Retriever)
-            .WithMany()
-            .HasForeignKey(x => x.RetrieverId)
-            .WillCascadeOnDelete(false);
+            //   modelBuilder.Entity<Message>()
+            //.HasRequired(x => x.Retriever)
+            //.WithMany()
+            //.HasForeignKey(x => x.RetrieverId)
+            //.WillCascadeOnDelete(false);
         }
     }
 }

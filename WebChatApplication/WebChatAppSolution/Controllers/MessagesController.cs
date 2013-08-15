@@ -48,13 +48,7 @@ namespace WebChatAppSolution.Controllers
                     FileUrl = x.FileUrl,
                     Content = x.Content,
                     PublishDate = x.PublishDate,
-                    State = x.State,
-
-                    Retriever = new UsersByMessages()
-                    {
-                        Id = x.Retriever.Id,
-                        NickName = x.Retriever.NickName,
-                    },
+                    State = x.State,                 
 
                     Sender = new UsersByMessages()
                     {
@@ -79,13 +73,6 @@ namespace WebChatAppSolution.Controllers
                     FileUrl = x.FileUrl,
                     PublishDate = x.PublishDate,
                     State = x.State,
-
-                    Retriever = new UsersByMessages()
-                    {
-                        Id = x.Retriever.Id,
-                        NickName = x.Retriever.NickName,
-                    },
-
                     Sender = new UsersByMessages()
                     {
                         Id = x.Sender.Id,
@@ -141,15 +128,6 @@ namespace WebChatAppSolution.Controllers
                 };
             }
 
-            if (value.Retriever != null)
-            {
-                message.Retriever = new User()
-                {
-                    Id = message.RetrieverId,
-                    NickName = message.Retriever.NickName,
-                };
-            }
-
             this.messageRepository.Update(message);
             var response = this.BuildHttpResponse(message, HttpStatusCode.OK);
             return response;
@@ -172,31 +150,12 @@ namespace WebChatAppSolution.Controllers
                 State = value.State,
             };
 
-            User sender = new User() ;
-            if (value.Sender != null)
-            {
-                sender = this.userRepository.Find(x => x.NickName == value.Sender.NickName).FirstOrDefault();
-            }
+            
+             User sender = this.userRepository.Find(x => x.NickName == value.Sender.NickName).FirstOrDefault();
 
             if (sender != null)
             {
                 newMessage.Sender = sender;
-            }
-            else
-            {
-                throw new ArgumentNullException("User must be register");
-            }
-
-            User resiver = new User();
-
-            if (value.Retriever != null)
-            {
-                resiver = this.userRepository.Find(x => x.Id == value.Retriever.Id).FirstOrDefault();
-            }
-
-            if (resiver != null)
-            {
-                newMessage.Retriever = resiver;
             }
             else
             {
@@ -216,12 +175,6 @@ namespace WebChatAppSolution.Controllers
                  Content = message.Content,
                  PublishDate = message.PublishDate,
                  State = message.State,
-
-                 Retriever = new UsersByMessages()
-                 {
-                     Id = message.Retriever.Id,
-                     NickName = message.Retriever.NickName,
-                 },
 
                  Sender = new UsersByMessages()
                  {
