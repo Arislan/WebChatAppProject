@@ -23,11 +23,10 @@ namespace WebChatAppSolution.Models
         public DateTime PublishDate { get; set; }
 
         [DataMember]
-<<<<<<< HEAD
         public string Channel { get; set; }
-=======
+
+        [DataMember]
         public string State { get; set; }
->>>>>>> 9b3932bbd5d1b151c2c8788b5440c68ada7d9f11
 
         [DataMember]
         public virtual UsersByMessages Retriever { get; set; }
