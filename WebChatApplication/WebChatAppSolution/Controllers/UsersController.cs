@@ -9,6 +9,9 @@ using WebChat.Data;
 using WebChat.Models;
 using WebChatAppSolution.Models;
 using System.Text;
+using FileUploader;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace WebChatAppSolution.Controllers
 {
@@ -72,6 +75,42 @@ namespace WebChatAppSolution.Controllers
 
             var response = this.LoginUser(existingUser, HttpStatusCode.OK);
             return response;
+        }
+
+        //http://localhost:52320/api/users/image
+        [HttpPost]
+        [ActionName("image")]
+        public async Task<HttpResponseMessage> UploadPicture()
+        {
+            // Check if the request contains multipart/form-data.
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            string root = HttpContext.Current.Server.MapPath("~/App_Data");
+            var provider = new MultipartFormDataStreamProvider(root);
+            string link = null;
+
+            try
+            {
+                // Read the form data.
+                await Request.Content.ReadAsMultipartAsync(provider);
+
+                // This illustrates how to get the file names.
+                MultipartFileData file = provider.FileData[0];
+
+                string path = file.LocalFileName;
+                string picName = file.Headers.ContentDisposition.FileName;
+                link = PictureUplouder.LoadPicture(path, picName);
+
+                var response = this.Request.CreateResponse(HttpStatusCode.OK, link);
+                return response;
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
         }
 
         [HttpGet]

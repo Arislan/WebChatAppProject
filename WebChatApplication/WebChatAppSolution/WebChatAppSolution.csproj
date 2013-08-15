@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -308,6 +311,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FileUploader\FileUploader.csproj">
+      <Project>{9e111e09-83bd-43b0-8ce2-e352a0f97b64}</Project>
+      <Name>FileUploader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebChat.Data\WebChat.Data.csproj">
       <Project>{9613ebad-9021-41c7-9e6a-bbd0edf68e47}</Project>
       <Name>WebChat.Data</Name>
