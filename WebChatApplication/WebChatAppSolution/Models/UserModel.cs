@@ -23,6 +23,9 @@ namespace WebChatAppSolution.Models
         [DataMember(Name="id")]
         public int Id { get; set; }
 
+        [DataMember(Name = "pictureUrl")]
+        public string PictureUrl { get; set; }
+
         [DataMember(Name = "sessionKey")]
         public string SessionKey { get; set; }
 
@@ -35,7 +38,8 @@ namespace WebChatAppSolution.Models
             {
                 Id = userEntity.Id,
                 Nickname = userEntity.NickName,
-                SessionKey = userEntity.SessionKey
+                SessionKey = userEntity.SessionKey,
+                PictureUrl = userEntity.PictureUrl
             };
 
             return model;

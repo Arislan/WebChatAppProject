@@ -77,10 +77,10 @@ namespace WebChatAppSolution.Controllers
             return response;
         }
 
-        //http://localhost:52320/api/users/image
+        //http://localhost:52320/api/users/image/
         [HttpPost]
         [ActionName("image")]
-        public async Task<HttpResponseMessage> UploadPicture()
+        public async Task<HttpResponseMessage> UploadPicture(string sessionKey)
         {
             // Check if the request contains multipart/form-data.
             if (!Request.Content.IsMimeMultipartContent())
@@ -103,6 +103,10 @@ namespace WebChatAppSolution.Controllers
                 string path = file.LocalFileName;
                 string picName = file.Headers.ContentDisposition.FileName;
                 link = PictureUplouder.LoadPicture(path, picName);
+
+                var user = this.userRepository.Find(u => u.SessionKey == sessionKey).FirstOrDefault();
+                user.PictureUrl = link;
+                this.userRepository.Update(user);
 
                 var response = this.Request.CreateResponse(HttpStatusCode.OK, link);
                 return response;
@@ -162,6 +166,14 @@ namespace WebChatAppSolution.Controllers
             }
 
             return models;
+        }
+
+        [HttpGet]
+        [ActionName("sessionKey")]
+        public UserLoggedModel GetRegisteredUsers(string sessionKey)
+        {
+            var user = this.userRepository.Find(x => x.SessionKey == sessionKey).FirstOrDefault();
+            return UserLoggedModel.CreateFromUserEntity(user);
         }
 
         private HttpResponseMessage LoginUser(User user, HttpStatusCode statusCode)
